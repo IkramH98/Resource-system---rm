@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="resourceallocation.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Allocation - Sopra Steria RMS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="sopraicon.png" alt="" class="icon"> 
+            <h1>Allocated Resources</h1>
+        </div>
+        <span class="fonticon">
+            <div class="w3-padding w3-xxlarge w3-text-black ">
+                <i class="fa fa-home"></i>
+                <i class="fa fa-search"></i>
+                <i class="fa fa-envelope"></i>
+                <i class="fa fa-info"></i>
+            </div>
+        </span>
+    </header>
+  
+    <nav>
+        <ul>
+            <li><a href="insights2.html"> Insights</a></li>
+            <li><a href="resourceinfo.html"> Resource Info </a></li>
+        </ul>
+    </nav>
+
+    <div class="filter-section">
+        <input type="text" id="nameFilter" placeholder="Filter by resource name">
+        <input type="text" id="projectFilter" placeholder="Filter by project name">
+        <input type="date" id="dateFilter" placeholder="Filter by submission date">
+        <select id="statusFilter">
+            <option value="">All Statuses</option>
+            <option value="Approved">Approved</option>
+            <option value="Pending">Pending</option>
+        </select>
+        <button class="btn" onclick="applyFilters()">Apply Filters</button>
+    </div>
+
+    <table id="allocationTable">
+        <thead>
+            <tr>
+                <th>Resource Name</th>
+                <th>Project Name</th>
+                <th>Submission Date</th>
+                <th>Allocation Status</th>
+            </tr>
+        </thead>
+        <tbody>
+ 
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+        <button class="btn" onclick="generateReport()">Generate Report</button>
+    </div>
+
+    <script>
+     
+        const allocations = [
+            { name: "John Doe", project: "ZenithCloud", submissionDate: "2024-09-15", status: "Approved" },
+            { name: "Jane Smith", project: "FlowFusion", submissionDate: "2024-10-01", status: "Pending" },
+            { name: "Mike Johnson", project: "ServicePulse", submissionDate: "2024-12-01", status: "Approved" },
+            { name: "Sarah Thomas", project: "BuildBridge", submissionDate: "2024-05-01", status: "Pending" },
+            { name: "Brad Steven", project: "IT NowOps", submissionDate: "2024-09-01", status: "Pending" },
+            { name: "Diana Lewis", project: "RapidRelease", submissionDate: "2024-07-01", status: "Approved" },
+            { name: "Chelsea Queen", project: "ServiceSync", submissionDate: "2024-03-01", status: "Pending" }
+        ];
+
+        // Populate allocation table
+        function populateTable(data) {
+            const tableBody = document.querySelector("#allocationTable tbody");
+            tableBody.innerHTML = "";
+            data.forEach(allocation => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${allocation.name}</td>
+                    <td>${allocation.project}</td>
+                    <td>${allocation.submissionDate}</td>
+                    <td>${allocation.status}</td>
+                `;
+            });
+        }
+
+        // Filter function
+        function applyFilters() {
+            const nameFilter = document.getElementById('nameFilter').value.toLowerCase();
+            const projectFilter = document.getElementById('projectFilter').value.toLowerCase();
+            const dateFilter = document.getElementById('dateFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            const filteredData = allocations.filter(allocation => {
+                return (
+                    allocation.name.toLowerCase().includes(nameFilter) &&
+                    allocation.project.toLowerCase().includes(projectFilter) &&
+                    (dateFilter === "" || allocation.submissionDate === dateFilter) &&
+                    (statusFilter === "" || allocation.status === statusFilter)
+                );
+            });
+
+            populateTable(filteredData);
+        }
+
+        function generateReport() {
+            alert('Report generation functionality to be implemented');
+        }
+
+        // Initialise the page to come up
+        populateTable(allocations);
+    </script>
+</body>
+</html>

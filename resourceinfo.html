@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="resourceinfo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Allocation - Sopra Steria RMS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="sopraicon.png" alt="" class="icon"> 
+            <h1>Resource Info</h1>
+        </div>
+       <span class="fonticon">
+         <div class="w3-padding w3-xxlarge w3-text-black">
+            <i class="fa fa-home"></i>
+            <i class="fa fa-search"></i>
+            <i class="fa fa-envelope"></i>
+            <i class="fa fa-info"></i>
+         </div>
+       </span>
+    </header>
+  
+    <nav>
+        <ul>
+            <li><a href="insights2.html"> Insights</a></li>
+            <li><a href="resourceallocation.html"> Allocated Resources</a></li>
+        </ul>
+    </nav>
+
+    <div class="filter-section">
+        <input type="text" id="nameFilter" placeholder="Name">
+        <input type="text" id="skillfilter" placeholder="Skill">
+        <button class="btn" onclick="applyFilters()">Apply Filters</button>
+    </div>
+
+    <table id="allocationTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Skills</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be dynamically populated -->
+        </tbody>
+    </table>
+
+    <script>
+        // Sample data
+        const allocations = [
+            { name: "Alice Green", email: "alice.green@email.co.uk", phoneNumber: "+44 7456 123456", skills: "Full Stack Developer", startDate: "2024-04-01", endDate: "2024-10-01" },
+            { name: "David Harris", email: "david.harris@email.com", phoneNumber: "+44 7723 654321", skills: "DevOps Engineer", startDate: "2024-06-15", endDate: "2024-12-15" },
+            { name: "Emily White", email: "emily.white@email.org", phoneNumber: "+44 7590 112233", skills: "Mobile App Developer", startDate: "2024-07-01", endDate: "2025-01-01" },
+            { name: "Chris Adams", email: "chris.adams@email.net", phoneNumber: "+44 7888 332211", skills: "Database Administrator", startDate: "2024-09-01", endDate: "2025-03-01" },
+            { name: "Rachel Brown", email: "rachel.brown@email.co.uk", phoneNumber: "+44 7540 987654", skills: "Data Scientist", startDate: "2024-10-15", endDate: "2025-04-15" },
+            { name: "Tom Richards", email: "tom.richards@email.com", phoneNumber: "+44 7765 334455", skills: "Cloud Architect", startDate: "2024-08-01", endDate: "2025-01-31" },
+            { name: "Linda Foster", email: "linda.foster@email.org", phoneNumber: "+44 7722 556677", skills: "Cloud Architect", startDate: "2024-05-10", endDate: "2024-11-10" },
+            { name: "Oliver Turner", email: "oliver.turner@email.co.uk", phoneNumber: "+44 7711 223344", skills: "Project Manager", startDate: "2024-02-01", endDate: "2024-08-01" },
+            { name: "Sophia Bell", email: "sophia.bell@email.com", phoneNumber: "+44 7555 667788", skills: "QA Engineer", startDate: "2024-03-15", endDate: "2024-09-15" },
+            { name: "Lucas Evans", email: "lucas.evans@email.net", phoneNumber: "+44 7729 889900", skills: "System Analyst", startDate: "2024-06-01", endDate: "2024-12-01" }
+        ];
+
+        // Populate allocation table
+        function populateTable(data) {
+            const tableBody = document.querySelector("#allocationTable tbody");
+            tableBody.innerHTML = "";
+            data.forEach(allocation => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${allocation.name}</td>
+                    <td>${allocation.email}</td>
+                    <td>${allocation.phoneNumber}</td>
+                    <td>${allocation.skills}</td>
+                    <td>${allocation.startDate}</td>
+                    <td>${allocation.endDate}</td>
+                `;
+            });
+        }
+
+        function applyFilters() {
+            const nameFilter = document.getElementById('nameFilter').value.toLowerCase();
+            const skillFilter = document.getElementById('skillfilter').value.toLowerCase();
+
+
+            const filteredData = allocations.filter(allocation => {
+                return (
+                    allocation.name.toLowerCase().includes(nameFilter) &&
+                    allocation.skills.toLowerCase().includes(skillFilter)
+                );
+            });
+
+            populateTable(filteredData);
+   
+        }
+                 
+        populateTable(allocations);
+
+ 
+    </script>
+</body>
+</html
