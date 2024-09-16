@@ -13,7 +13,7 @@
     <header>
         <div class="container">
             <img src="sopraicon.png" alt="" class="icon"> 
-            <h1>Resource Info</h1>
+            <h1>Submit Request</h1>
         </div>
        <span class="fonticon">
          <div class="w3-padding w3-xxlarge w3-text-black">
@@ -27,14 +27,19 @@
   
     <nav>
         <ul>
-            <li><a href="insights2.html"> Insights</a></li>
-            <li><a href="resourceallocation.html"> Allocated Resources</a></li>
+            <li><a href="index.html">Open Demands</a></li>
+            <li><a href="insights2.html">Insights</a></li>
+            <li><a href="resourceallocation.html">Allocated Resources</a></li>
         </ul>
     </nav>
 
+    <div id="projectInfo">
+        <!-- Project info will be displayed here -->
+    </div>
+
     <div class="filter-section">
         <input type="text" id="nameFilter" placeholder="Name">
-        <input type="text" id="skillfilter" placeholder="Skill">
+        <input type="text" id="skillFilter" placeholder="Skill">
         <button class="btn" onclick="applyFilters()">Apply Filters</button>
     </div>
 
@@ -47,6 +52,7 @@
                 <th>Skills</th>
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -55,56 +61,98 @@
     </table>
 
     <script>
-        // Sample data
-        const allocations = [
-            { name: "Alice Green", email: "alice.green@email.co.uk", phoneNumber: "+44 7456 123456", skills: "Full Stack Developer", startDate: "2024-04-01", endDate: "2024-10-01" },
-            { name: "David Harris", email: "david.harris@email.com", phoneNumber: "+44 7723 654321", skills: "DevOps Engineer", startDate: "2024-06-15", endDate: "2024-12-15" },
-            { name: "Emily White", email: "emily.white@email.org", phoneNumber: "+44 7590 112233", skills: "Mobile App Developer", startDate: "2024-07-01", endDate: "2025-01-01" },
-            { name: "Chris Adams", email: "chris.adams@email.net", phoneNumber: "+44 7888 332211", skills: "Database Administrator", startDate: "2024-09-01", endDate: "2025-03-01" },
-            { name: "Rachel Brown", email: "rachel.brown@email.co.uk", phoneNumber: "+44 7540 987654", skills: "Data Scientist", startDate: "2024-10-15", endDate: "2025-04-15" },
-            { name: "Tom Richards", email: "tom.richards@email.com", phoneNumber: "+44 7765 334455", skills: "Cloud Architect", startDate: "2024-08-01", endDate: "2025-01-31" },
-            { name: "Linda Foster", email: "linda.foster@email.org", phoneNumber: "+44 7722 556677", skills: "Cloud Architect", startDate: "2024-05-10", endDate: "2024-11-10" },
-            { name: "Oliver Turner", email: "oliver.turner@email.co.uk", phoneNumber: "+44 7711 223344", skills: "Project Manager", startDate: "2024-02-01", endDate: "2024-08-01" },
-            { name: "Sophia Bell", email: "sophia.bell@email.com", phoneNumber: "+44 7555 667788", skills: "QA Engineer", startDate: "2024-03-15", endDate: "2024-09-15" },
-            { name: "Lucas Evans", email: "lucas.evans@email.net", phoneNumber: "+44 7729 889900", skills: "System Analyst", startDate: "2024-06-01", endDate: "2024-12-01" }
+        // Sample project data
+        const projects = [
+            { id: 1, name: "Zenith Cloud", role: "Cloud Architect", startDate: "2024-06-15", endDate: "2024-07-15", status: "Active" },
+            // Add other projects here
         ];
 
-        // Populate allocation table
+        // Sample resource data
+        const resources = [
+            { id: 1, name: "Alice Green", email: "alice.green@email.co.uk", phoneNumber: "+44 7456 123456", skills: "Full Stack Developer", startDate: "2024-04-01", endDate: "2024-10-01" },
+            { id: 2, name: "David Harris", email: "david.harris@email.com", phoneNumber: "+44 7723 654321", skills: "DevOps Engineer", startDate: "2024-06-15", endDate: "2024-12-15" },
+            { id: 3, name: "Emily White", email: "emily.white@email.org", phoneNumber: "+44 7590 112233", skills: "Mobile App Developer", startDate: "2024-07-01", endDate: "2025-01-01" },
+            { id: 4, name: "Chris Adams", email: "chris.adams@email.net", phoneNumber: "+44 7888 332211", skills: "Database Administrator", startDate: "2024-09-01", endDate: "2025-03-01" },
+            { id: 5, name: "Rachel Brown", email: "rachel.brown@email.co.uk", phoneNumber: "+44 7540 987654", skills: "Data Scientist", startDate: "2024-10-15", endDate: "2025-04-15" },
+            { id: 6, name: "Tom Richards", email: "tom.richards@email.com", phoneNumber: "+44 7765 334455", skills: "Cloud Architect", startDate: "2024-08-01", endDate: "2025-01-31" },
+            { id: 7, name: "Linda Foster", email: "linda.foster@email.org", phoneNumber: "+44 7722 556677", skills: "Cloud Architect", startDate: "2024-05-10", endDate: "2024-11-10" },
+            { id: 8, name: "Oliver Turner", email: "oliver.turner@email.co.uk", phoneNumber: "+44 7711 223344", skills: "Project Manager", startDate: "2024-02-01", endDate: "2024-08-01" },
+            { id: 9, name: "Sophia Bell", email: "sophia.bell@email.com", phoneNumber: "+44 7555 667788", skills: "QA Engineer", startDate: "2024-03-15", endDate: "2024-09-15" },
+            { id: 10, name: "Lucas Evans", email: "lucas.evans@email.net", phoneNumber: "+44 7729 889900", skills: "System Analyst", startDate: "2024-06-01", endDate: "2024-12-01" }
+        ];
+
+        let currentProject;
+
+        // Get project ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectId = urlParams.get('id');
+
+        // Find the project by ID
+        currentProject = projects.find(p => p.id === parseInt(projectId));
+
+        // Display project info
+        function displayProjectInfo() {
+            const projectInfoDiv = document.getElementById('projectInfo');
+            if (currentProject) {
+                projectInfoDiv.innerHTML = `
+                    <h2>${currentProject.name}</h2>
+                    <p><strong>Role:</strong> ${currentProject.role}</p>
+                    <p><strong>Start Date:</strong> ${currentProject.startDate}</p>
+                    <p><strong>End Date:</strong> ${currentProject.endDate}</p>
+                    <p><strong>Status:</strong> ${currentProject.status}</p>
+                `;
+                // Set the skill filter to the project's role
+                document.getElementById('skillFilter').value = currentProject.role;
+            } else {
+                projectInfoDiv.innerHTML = '<p>Project not found.</p>';
+            }
+        }
+
+        // Populate resource table
         function populateTable(data) {
             const tableBody = document.querySelector("#allocationTable tbody");
             tableBody.innerHTML = "";
-            data.forEach(allocation => {
+            data.forEach(resource => {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td>${allocation.name}</td>
-                    <td>${allocation.email}</td>
-                    <td>${allocation.phoneNumber}</td>
-                    <td>${allocation.skills}</td>
-                    <td>${allocation.startDate}</td>
-                    <td>${allocation.endDate}</td>
+                    <td>${resource.name}</td>
+                    <td>${resource.email}</td>
+                    <td>${resource.phoneNumber}</td>
+                    <td>${resource.skills}</td>
+                    <td>${resource.startDate}</td>
+                    <td>${resource.endDate}</td>
+                    <td><button onclick="assignResource(${resource.id})">Submit</button></td>
                 `;
             });
         }
 
         function applyFilters() {
             const nameFilter = document.getElementById('nameFilter').value.toLowerCase();
-            const skillFilter = document.getElementById('skillfilter').value.toLowerCase();
+            const skillFilter = document.getElementById('skillFilter').value.toLowerCase();
 
-
-            const filteredData = allocations.filter(allocation => {
+            const filteredData = resources.filter(resource => {
                 return (
-                    allocation.name.toLowerCase().includes(nameFilter) &&
-                    allocation.skills.toLowerCase().includes(skillFilter)
+                    resource.name.toLowerCase().includes(nameFilter) &&
+                    resource.skills.toLowerCase().includes(skillFilter)
                 );
             });
 
             populateTable(filteredData);
-   
         }
-                 
-        populateTable(allocations);
 
- 
+        function assignResource(resourceId) {
+            const resource = resources.find(r => r.id === resourceId);
+            if (resource && currentProject) {
+                alert(`Resource ${resource.name} has been assigned to project ${currentProject.name}.`);
+                // In a real application, you would update the project and resource data on the server
+            } else {
+                alert('Unable to assign resource. Please try again.');
+            }
+        }
+
+        // Initialize the page
+        displayProjectInfo();
+        applyFilters(); // This will populate the table with filtered results based on the project's role
     </script>
 </body>
-</html
+</html>

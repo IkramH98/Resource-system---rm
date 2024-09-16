@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="opendemands.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Allocation - Sopra Steria RMS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="sopraicon.png" alt="" class="icon"> 
+            <h1>Open Demand Requests</h1>
+        </div>
+       <span class="fonticon">
+         <div class="w3-padding w3-xxlarge w3-text-black">
+            <i class="fa fa-home"></i>
+            <i class="fa fa-search"></i>
+            <i class="fa fa-envelope"></i>
+            <i class="fa fa-info"></i>
+         </div>
+       </span>
+    </header>
+  
+    <nav>
+        <ul>
+            <li><a href="insights2.html"> Insights</a></li>
+            <li><a href="resourceallocation.html"> Allocated Resources</a></li>
+        </ul>
+    </nav>
+
+    <div class="filter-section">
+        <input type="text" id="nameFilter" placeholder="Project Name">
+        <input type="text" id="startDateFilter" placeholder="Start date">
+        <button class="btn" onclick="applyFilters()">Apply Filters</button>
+    </div>
+
+    <table id="allocationTable">
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Role</th>
+                <th>Start Date</th>
+                <th>End date</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be dynamically populated -->
+        </tbody>
+    </table>
+
+    <script>
+        // Sample data
+        const allocations = [
+            { id: 1, name: "Zenith Cloud", role: "Developer", startDate: "2024-06-15", endDate: "2024-07-15", status: "Active" },
+            { id: 2, name: "FlowFusion", role: "Designer", startDate: "2024-07-15", endDate: "2024-08-15", status: "Active" },
+            { id: 3, name: "ServicePulse", role: "Project Manager", startDate: "2024-09-15", endDate: "2024-10-15", status: "Active" },
+            { id: 4, name: "BuildBridge", role: "Tester", startDate: "2024-11-15", endDate: "2025-12-15", status: "Active" },
+            { id: 5, name: "IT NowOps", role: "DevOps", startDate: "2025-01-15", endDate: "2025-02-15", status: "Active" },
+            { id: 6, name: "ServiceSync", role: "Analyst", startDate: "2025-02-15", endDate: "2025-03-15", status: "Active" },
+            { id: 7, name: "RapidReleaser", role: "Developer", startDate: "2025-05-15", endDate: "2025-06-15", status: "Active" },
+        ];
+
+        // Populate allocation table
+        function populateTable(data) {
+            const tableBody = document.querySelector("#allocationTable tbody");
+            tableBody.innerHTML = "";
+            data.forEach(allocation => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${allocation.name}</td>
+                    <td>${allocation.role}</td>
+                    <td>${allocation.startDate}</td>
+                    <td>${allocation.endDate}</td>
+                    <td>${allocation.status}</td>
+                    <td><button onclick="openResourceInfo(${allocation.id})">Assign</button></td>
+                `;
+            });
+        }
+
+        function applyFilters() {
+            const nameFilter = document.getElementById('nameFilter').value.toLowerCase();
+            const startDateFilter = document.getElementById('startDateFilter').value.toLowerCase();
+
+            const filteredData = allocations.filter(allocation => {
+                return (
+                    allocation.name.toLowerCase().includes(nameFilter) &&
+                    allocation.startDate.includes(startDateFilter)
+                );
+            });
+
+            populateTable(filteredData);
+        }
+
+        function openResourceInfo(id) {
+            window.location.href = `resourceinfo.html?id=${id}`;
+        }
+                 
+        populateTable(allocations);
+    </script>
+</body>
+</html>
