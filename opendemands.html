@@ -15,14 +15,12 @@
             <img src="sopraicon.png" alt="" class="icon"> 
             <h1>Open Demand Requests</h1>
         </div>
-       <span class="fonticon">
-         <div class="w3-padding w3-xxlarge w3-text-black">
-            <i class="fa fa-home"></i>
-            <i class="fa fa-search"></i>
-            <i class="fa fa-envelope"></i>
-            <i class="fa fa-info"></i>
-         </div>
-       </span>
+        <span class="fonticon">
+            <div class="w3-padding w3-xxlarge w3-text-black">
+                <a href="insights2.html"><i class="fa fa-home"></i></a>
+                <a href="mailto:resourcehubhelp@soprasteria.com"><i class="fa fa-envelope"></i></a>
+            </div>
+        </span>
     </header>
   
     <nav>
@@ -42,7 +40,6 @@
         <thead>
             <tr>
                 <th>Project Name</th>
-                <th>Role</th>
                 <th>Start Date</th>
                 <th>End date</th>
                 <th>Status</th>
@@ -57,13 +54,13 @@
     <script>
         // Sample data
         const allocations = [
-            { id: 1, name: "Zenith Cloud", role: "Developer", startDate: "2024-06-15", endDate: "2024-07-15", status: "Active" },
-            { id: 2, name: "FlowFusion", role: "Designer", startDate: "2024-07-15", endDate: "2024-08-15", status: "Active" },
-            { id: 3, name: "ServicePulse", role: "Project Manager", startDate: "2024-09-15", endDate: "2024-10-15", status: "Active" },
-            { id: 4, name: "BuildBridge", role: "Tester", startDate: "2024-11-15", endDate: "2025-12-15", status: "Active" },
-            { id: 5, name: "IT NowOps", role: "DevOps", startDate: "2025-01-15", endDate: "2025-02-15", status: "Active" },
-            { id: 6, name: "ServiceSync", role: "Analyst", startDate: "2025-02-15", endDate: "2025-03-15", status: "Active" },
-            { id: 7, name: "RapidReleaser", role: "Developer", startDate: "2025-05-15", endDate: "2025-06-15", status: "Active" },
+            { id: 1, name: "Zenith Cloud", startDate: "2024-06-15", endDate: "2024-07-15", status: "Active" },
+            { id: 2, name: "FlowFusion", startDate: "2024-07-15", endDate: "2024-08-15", status: "Active" },
+            { id: 3, name: "ServicePulse", startDate: "2024-09-15", endDate: "2024-10-15", status: "Active" },
+            { id: 4, name: "BuildBridge", startDate: "2024-11-15", endDate: "2025-12-15", status: "Active" },
+            { id: 5, name: "IT NowOps", startDate: "2025-01-15", endDate: "2025-02-15", status: "Active" },
+            { id: 6, name: "ServiceSync", startDate: "2025-02-15", endDate: "2025-03-15", status: "Active" },
+            { id: 7, name: "RapidReleaser", startDate: "2025-05-15", endDate: "2025-06-15", status: "Active" },
         ];
 
         // Populate allocation table
@@ -74,7 +71,6 @@
                 const row = tableBody.insertRow();
                 row.innerHTML = `
                     <td>${allocation.name}</td>
-                    <td>${allocation.role}</td>
                     <td>${allocation.startDate}</td>
                     <td>${allocation.endDate}</td>
                     <td>${allocation.status}</td>
