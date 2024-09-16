@@ -22,7 +22,22 @@ header {
     justify-content: space-between;
     align-items: center;
 }
+header h1 {
+    font-size: 2.5rem; 
+    text-transform: none; 
+    letter-spacing: 1px; 
+    color: black; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); 
+    padding: 15px;
+    margin: 0;
+}
 
+header {
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
 header .container {
     display: flex;
     align-items: center;
@@ -155,6 +170,7 @@ tr:hover {
 
 }
 
+
 /* nav bar hover effect */
 nav ul li a {
     padding: 5px 10px;
@@ -163,4 +179,20 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #b81724;
     border-radius: 5px;
+}
+
+/* Style for the "Submit" button */
+#allocationTable button {
+    background-color: #dc1c2c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the button */
+#allocationTable button:hover {
+    background-color: #b81724;
 }
