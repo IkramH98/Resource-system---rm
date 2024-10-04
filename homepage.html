@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form | ResourceHub</title> 
+    <title>Login Form | Resource Manager</title> 
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
   </head>
@@ -16,7 +16,7 @@
         <form id="loginForm">
           <div class="row">
             <i class="fas fa-user"></i>
-            <input type="text" id="username" placeholder="Username" required>
+            <input type="text" id="username" placeholder="Email" required>
           </div>
           <div class="row">
             <i class="fas fa-lock"></i>
@@ -31,20 +31,9 @@
       </div>
     </div>
 
+    <script src="homepage.js"></script>
     <script>
-      document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        var username = document.getElementById('username').value;
-        var password = document.getElementById('password').value;
-        
-        if (username === 'Jack' && password === 'Jack') {
-          // Redirect to the allocated resources page
-          window.location.href = 'insights2.html';
-        } else {
-          alert('Invalid username or password. Please try again.');
-        }
-      });
+      document.getElementById('loginForm').addEventListener('submit', handleLogin);
     </script>
   </body>
 </html>
